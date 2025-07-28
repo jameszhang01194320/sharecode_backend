@@ -1,9 +1,13 @@
-from django.contrib import admin
+# sharecode_backend/urls.py
+from django.contrib import admin  # ✅ 加上这一行
+from django.http import HttpResponse
 from django.urls import path, include
+
+def home(request):
+    return HttpResponse("Welcome to ShareCode Backend API!")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # 将 /api/snippets/ 交给 snippets.urls 处理
     path('api/snippets/', include('snippets.urls')),
+    path('', home),  # 添加这一行
 ]
