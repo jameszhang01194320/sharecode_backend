@@ -2,6 +2,8 @@ from pathlib import Path
 import os
 import dj_database_url
 # type: ignore
+DATABASES = {}
+
 DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')  # type: ignore
 
 
