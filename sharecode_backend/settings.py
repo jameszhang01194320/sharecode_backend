@@ -43,13 +43,15 @@ CSRF_TRUSTED_ORIGINS = [
 
 # 你用 Vercel 的 rewrites 走“同源”时，其实可以不需要 CORS；
 # 若你有直接在浏览器访问后端域名调试，就精确允许而不是放开全部：
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    'https://*.vercel.app',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-]
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = ['DELETE','GET','OPTIONS','PATCH','POST','PUT']
+CORS_ALLOW_HEADERS = ['*']
+# CORS_ALLOWED_ORIGINS = [
+#     'https://*.vercel.app',
+#     'http://localhost:3000',
+#     'http://127.0.0.1:3000'
+# ]
+CORS_ALLOW_CREDENTIALS = False
 
 # 让 Django 在代理后正确识别 HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
