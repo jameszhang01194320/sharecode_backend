@@ -17,15 +17,51 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-++wsvi%7x-fvi6@rn!utd+9e%-z*a-n%$a3(_(n209dnc(3xm='
+##########################
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'sharecode-backend-vrjn.onrender.com']
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'sharecode-backend-vrjn.onrender.com']
+# # ALLOWED_HOSTS = ['.onrender.com'] 
 
-# ALLOWED_HOSTS = ['.onrender.com'] 
+# CORS_ALLOW_ALL_ORIGINS = True  # 开发阶段临时放开
+###########################
+# === Production & host/CSRF/CORS ===
 
-CORS_ALLOW_ALL_ORIGINS = True  # 开发阶段临时放开
+DEBUG = False   # 线上请关掉
+
+# 允许任意 Render 子域 + Vercel 域名 + 本地开发
+ALLOWED_HOSTS = ['.onrender.com', '.vercel.app', 'localhost', '127.0.0.1']
+
+# 前端发起表单/POST 的来源白名单（必须写完整 scheme）
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.vercel.app',
+    'http://localhost:3000',   # 本地前端调试需要
+    'http://127.0.0.1:3000'
+]
+
+# 你用 Vercel 的 rewrites 走“同源”时，其实可以不需要 CORS；
+# 若你有直接在浏览器访问后端域名调试，就精确允许而不是放开全部：
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    'https://*.vercel.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
+CORS_ALLOW_CREDENTIALS = True
+
+# 让 Django 在代理后正确识别 HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# 生产 Cookie 建议
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+# 默认 SameSite=Lax 一般即可，按需再调整
+# SESSION_COOKIE_SAMESITE = 'Lax'
+# CSRF_COOKIE_SAMESITE = 'Lax'
+############################
+
 
 # Application definition
 
